@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Overall State</title>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Chart.js Date Adapter -->
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
+    <!-- Chart.js Data Labels Plugin -->
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="./css/header.css" />
+</head>
+
+<body class="bg-light">
+    <!-- HEADER -->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="title-box">
+                <div class="title-content">
+                    <div class="circle"></div>
+                    <div class="title-text">
+                        <h3>
+                            <span>H</span>
+                            <span>Q</span>
+                            <span>&nbsp;</span>
+                            <span>3</span>
+                            <span>3</span>
+                            <span>0</span>
+                            <span>&nbsp;</span>
+                            <span>I</span>
+                            <span>N</span>
+                            <span>F</span>
+                            <span>&nbsp;</span>
+                            <span>B</span>
+                            <span>D</span>
+                            <span>E</span>
+                        </h3>
+                    </div>
+
+                    <div class="circle"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <nav class="navbar navbar-expand-custom navbar-mainbg mb-2 mt-1">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav">
+                <div class="hori-selector">
+                    <div class="left"></div>
+                    <div class="right"></div>
+                </div>
+                <li class="nav-item active">
+                    <a class="nav-link" href="home.html">HOME</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="dashboardM.html">MANPOWER</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="dashboardV.html">VEHICLE</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="dashboardE.html">EQUIPEMENT</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link">AMN</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link">UNITS</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link">MISC</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container-fluid overflow-hidden">
+        <!-- CHARTS -->
+        <div class="row h-full py-2">
+            <div class="d-flex gap-3">
+                <!-- Bar Chart -->
+                <div class="col-5 shadow border rounded-3 border border-dark">
+                    <canvas id="myChart" width="800" height="450"></canvas>
+                </div>
+                <div class="col-7 fs-6">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="card border-dark shadow-sm">
+                                <div class="card-header bg-success text-white fw-semibold text-center border-dark">
+                                    PRESENT STRENGTH
+                                </div>
+                                <div class="card-body p-2">
+                                    <table id="presentTable" class="table table-bordered border-dark text-center mb-0">
+                                        <thead class="table-success">
+                                            <tr>
+                                                <th style="">Unit</th>
+                                                <th>Offrs</th>
+                                                <th>JCOs</th>
+                                                <th>ORs</th>
+                                                <th>Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="presentBody"></tbody>
+                                        <tfoot class="table-info">
+                                            <tr>
+                                                <td>GRAND TOTAL</td>
+                                                <td id="presentGtOffrs">0</td>
+                                                <td id="presentGtJcos">0</td>
+                                                <td id="presentGtOrs">0</td>
+                                                <td id="presentGtTotal">0</td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-6">
+                            <div class="card border-dark shadow-sm">
+                                <div class="card-header bg-danger text-white fw-semibold text-center border-dark">
+                                    ABSENT STRENGTH
+                                </div>
+                                <div class="card-body p-2">
+                                    <table id="absentTable" class="table table-bordered border-dark text-center ">
+                                        <thead class="table-danger">
+                                            <tr>
+                                                <th style="">Unit</th>
+                                                <th>Offrs</th>
+                                                <th>JCOs</th>
+                                                <th>ORs</th>
+                                                <th>Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="absentBody"></tbody>
+                                        <tfoot class="table-info">
+                                            <tr>
+                                                <td>GRAND TOTAL</td>
+                                                <td id="absentGtOffrs">0</td>
+                                                <td id="absentGtJcos">0</td>
+                                                <td id="absentGtOrs">0</td>
+                                                <td id="absentGtTotal">0</td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                    <div class="small-muted mt-2">Hover or click a unit row to view that unit's absent
+                                        names for the
+                                        selected date.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+        </div>
+    </div>
+</body>
+<!-- CHART SCRIPT -->
+<script>
+    const labels = [
+        "15 Maratha LI",
+        "13 Mahar",
+        "15 Jat",
+        "330 BDE CAMP",
+        "330 IBSC",
+        "257 FD WKSP",
+    ];
+
+    function randomData(count, min, max) {
+        const data = [];
+        for (let i = 0; i < count; i++) {
+            data.push(Math.floor(Math.random() * (max - min + 1)) + min);
+        }
+        return data;
+    }
+
+    const barData = {
+        labels: labels,
+        datasets: [
+            {
+                type: "bar",
+                label: "Manpower",
+                backgroundColor: "rgba(255, 99, 132, 0.5)",
+                borderColor: "rgb(500, 99, 132)",
+                data: randomData(labels.length, 80, 100),
+            },
+            {
+                type: "bar",
+                label: "Vehicle",
+                backgroundColor: "rgba(54, 162, 235, 0.7)",
+                borderColor: "rgb(57, 200, 700)",
+                data: randomData(labels.length, 60, 80),
+            },
+            {
+                type: "bar",
+                label: "Equipements",
+                backgroundColor: "rgba(75, 192, 192, 0.8)",
+                borderColor: "rgb(295, 310, 820, 0.5)",
+                data: randomData(labels.length, 0, 20),
+            },
+        ],
+    };
+
+    const currentDate = new Date().toLocaleDateString("en-GB", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+    });
+
+    const barConfig = {
+        type: "bar",
+        data: barData,
+        options: {
+            responsive: true,
+            plugins: {
+                title: {
+                    display: true,
+                    text: "OVERALL STATE",
+                    color: "#000",
+                    font: {
+                        size: 18,
+                        weight: "bold",
+                    },
+                },
+            },
+            scales: {
+                x: {
+                    type: "category",
+                    title: {
+                        display: false,
+                    },
+                    grid: { display: false },
+                },
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: "Count",
+                    },
+                },
+            },
+        },
+        plugins: [
+            {
+                id: "dateDisplay",
+                afterDraw: (chart) => {
+                    const ctx = chart.ctx;
+                    const paddingRight = 15;
+                    ctx.save();
+                    ctx.font = "bold 14px Arial";
+                    ctx.fillStyle = "#000";
+                    ctx.textAlign = "right";
+                    ctx.fillText(
+                        currentDate,
+                        chart.chartArea.right - paddingRight,
+                        chart.chartArea.top - 30
+                    );
+                    ctx.restore();
+                },
+            },
+        ],
+    };
+    // Render charts
+    const barChart = new Chart(document.getElementById("myChart"), barConfig);
+</script>
+<!-- JS Libraries -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    // --------- Responsive Navbar Active Animation -----------
+    function test() {
+        var tabsNewAnim = $('#navbarSupportedContent');
+        var activeItemNewAnim = tabsNewAnim.find('.active');
+        var activeWidthNewAnimHeight = activeItemNewAnim.innerHeight();
+        var activeWidthNewAnimWidth = activeItemNewAnim.innerWidth();
+        var itemPosNewAnimTop = activeItemNewAnim.position();
+        var itemPosNewAnimLeft = activeItemNewAnim.position();
+        $(".hori-selector").css({
+            "top": itemPosNewAnimTop.top + "px",
+            "left": itemPosNewAnimLeft.left + "px",
+            "height": activeWidthNewAnimHeight + "px",
+            "width": activeWidthNewAnimWidth + "px"
+        });
+        $("#navbarSupportedContent").on("click", "li", function (e) {
+            $('#navbarSupportedContent ul li').removeClass("active");
+            $(this).addClass('active');
+            var activeWidthNewAnimHeight = $(this).innerHeight();
+            var activeWidthNewAnimWidth = $(this).innerWidth();
+            var itemPosNewAnimTop = $(this).position();
+            var itemPosNewAnimLeft = $(this).position();
+            $(".hori-selector").css({
+                "top": itemPosNewAnimTop.top + "px",
+                "left": itemPosNewAnimLeft.left + "px",
+                "height": activeWidthNewAnimHeight + "px",
+                "width": activeWidthNewAnimWidth + "px"
+            });
+        });
+    }
+
+    $(document).ready(function () {
+        setTimeout(function () { test(); }, 100);
+    });
+</script>
+
+</html>

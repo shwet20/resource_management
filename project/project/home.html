@@ -13,319 +13,188 @@
   <!-- Bootstrap -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous" />
-
-  <style>
-    /* Main container */
-    .main-container {
-      height: calc(100vh - 185px);
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      padding: 10px;
-    }
-
-    /* Header and Navigation */
-    .bg-primary {
-      background-color: #007bff;
-    }
-
-    .bg-danger {
-      background-color: #dc3545;
-    }
-
-      .bg-warning {
-        background-color: #ffc107;
-      }
-
-      .text-white {
-        color: white !important;
-      }
-
-      .text-danger {
-        color: red !important;
-      }
-
-      .text-center {
-        text-align: center;
-      }
-
-      .font-bold {
-        font-weight: bold;
-      }
-
-      .navbar-container {
-        padding: 10px 0;
-      }
-
-      .navbar-container a {
-        transition: background-color 0.3s ease, color 0.3s ease;
-      }
-
-      /* Navbar links customization */
-      .nav-link-custom {
-        background-color: #007bff;
-        color: white;
-        padding: 8px 15px;
-        text-align: center;
-        border-radius: 5px;
-        font-size: 14px;
-        margin: 5px;
-        text-decoration: none;
-        font-weight: 600;
-      }
-
-      .nav-link-custom:hover,
-      .nav-link-custom.active {
-        background-color: green;
-        color: white;
-      }
-
-      /* Styling for Header */
-      .bg-primary h3 {
-        font-size: 22px;
-        color: white;
-      }
-
-    /* Main Content */
-    .wrapper {
-      display: flex;
-      justify-content: space-between;
-      gap: 20px;
-      flex-wrap: wrap;
-    }
-
-    .left {
-      background-image: url(HQ 330 BDE CDR PHOTO WITH NAME);
-    }
-
-    .middle {
-      background-image: url(./SYMBOL/Burj_Day/9\ Nb\ Sub\ Shankar\ Mengre\,SC.jpg);
-    }
-
-    .right {
-      background-image: url(./SYMBOL/Ex_DUSTLIKVI_1.jpg);
-    }
-
-    .left,
-    .middle,
-    .right {
-      background-repeat: no-repeat;
-      background-size: cover;
-      /* flex: 1; */
-      background-color: #f8f9fa;
-      border-radius: 8px;
-      padding: 20px;
-      height: calc(100vh - 375px);
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-      transition: transform 0.5s ease-in-out;
-    }
-
-    .left,
-    .right {
-      width: 20vw;
-    }
-
-    .middle {
-      width: 50vw;
-
-    }
-
-    .left:hover,
-    .right:hover,
-    .middle:hover {
-      transform: scale(1.05);
-      box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.1);
-    }
-
-      /* Footer */
-      .bottom {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        gap: 10px;
-        margin-top: 20px;
-      }
-
-      .bottom div {
-        flex: 1;
-        min-width: 200px;
-        /* background-color: #f1f1f1; */
-        border-radius: 8px;
-        padding: 15px;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-      }
-
-    .bottom .calendar,
-    .bottom .library,
-    .bottom .news,
-    .bottom .ftn,
-    .bottom .gallery,
-    .bottom .aboutus {
-      background-color: #fff;
-      border: 1px solid #ddd;
-      background-repeat: no-repeat;
-      background-size: contain;
-      background-position: center;
-    }
-
-    .calendor {
-      background-image: url(./SYMBOL/CALENDER.png);
-    }
-
-    .library {
-      background-image: url(./SYMBOL/Burj_Day/LT\ NAVDEEP\ SINGH\ AMENDED.jpg);
-    }
-
-    .news {
-      background-image: url(./SYMBOL/telephone-icon-clipart-lg.png);
-      
-    }
-
-    .ftn {
-      background-image: url(./SYMBOL/INF\ SOL.png);
-    }
-
-    .gallery {
-      background-image: url(./SYMBOL/upcoming-event-calendar.jpg);
-    }
-
-    .aboutus {
-      background-image: url(.............);
-    }
-
-    /* Calendar, Library, and other sections styling */
-    .bottom div h4 {
-      font-size: 18px;
-      font-weight: 600;
-      margin-bottom: 15px;
-    }
-
-    .calendor,
-    .library,
-    .news,
-    .ftn,
-    .gallery,
-    .aboutus {
-      height: 150px;
-      background-repeat: no-repeat;
-      background-size: contain;
-      background-position: center;
-    }
-
-    .calendor:hover,
-    .library:hover,
-    .news:hover,
-    .ftn:hover,
-    .gallery:hover,
-    .aboutus:hover {
-      box-shadow: 0 2px 10px rgba(164, 163, 163, 0.943);
-    }
-
-      /* Pie chart responsiveness */
-      #pieChart {
-        max-width: 100%;
-        height: 250px !important;
-      }
-
-      /* Responsive Design */
-      @media (max-width: 768px) {
-        .navbar-container {
-          flex-direction: column;
-          align-items: center;
-        }
-
-        .wrapper {
-          flex-direction: column;
-        }
-
-        .bottom {
-          flex-direction: column;
-        }
-
-        .bottom div {
-          min-width: 100%;
-          margin-bottom: 15px;
-        }
-      }
-
-      #pieChart {
-        max-width: 100%;
-        height: 250px !important;
-      }
-      .nav-link-custom:hover {
-        background-color: green !important;
-        color: white !important;
-      }
-      .nav-link-custom.active {
-        background-color: green !important;
-        color: white !important;
-      }
-    </style>
-    <link rel="stylesheet" href="style.css" />
-  </head>
+  <link rel="stylesheet" href="./css/header.css" />
+  <link rel="stylesheet" href="./css/home.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
 
 <body class="bg-light">
   <div class="container-fluid">
-    <!-- HEADER -->
     <div class="row">
-      <div class="bg-primary px-3 py-1 border border-dark shadow">
-        <div class="d-flex justify-content gap-2">
-          <div class="div col-1 px-2">
-            <div class="bg-danger w-75 rounded-circle"></div>
+      <div class="title-box">
+        <div class="title-content">
+          <div class="circle"></div>
+          <div class="title-text">
+            <h3>
+              <span>H</span>
+              <span>Q</span>
+              <span>&nbsp;</span>
+              <span>3</span>
+              <span>3</span>
+              <span>0</span>
+              <span>&nbsp;</span>
+              <span>I</span>
+              <span>N</span>
+              <span>F</span>
+              <span>&nbsp;</span>
+              <span>B</span>
+              <span>D</span>
+              <span>E</span>
+            </h3>
           </div>
-          <div class="div col-10">
-            <div class="p-1">
-              <h3 class="fw-bold fs-1 text-white pt-1 text-decoration-underline" style="font-family: Trirong, serif;" align="center">
-                HQ 330 INF BDE
-              </h3>
-            </div>
-          </div>
-          <div class="div col-1 ps-2">
-            <div class="bg-danger w-75 rounded-circle"></div>
-          </div>
+
+          <div class="circle"></div>
         </div>
       </div>
     </div>
-    <div class="row bg-warning py-1 my-1 border border-dark mt-2">
-      <h6 class="text-center text-danger fw-bold pt-1">
+    <div class="row bg-warning border border-dark mt-1 py-1 shadow">
+      <h6 class="jeet-nischay pt-1">
         JEET, NISCHAY
       </h6>
     </div>
-    <div class="row my-1">
-      <div class="row gap-2 ps-4 text-white" style="font-size: 14px">
-        <a href="./home.html"
-          class="col bg-primary rounded-3 text-center py-1 fw-semibold text-white text-decoration-none nav-link-custom">HOME</a>
-        <a href="./dashboardM.html"
-          class="col bg-primary rounded-3 text-center py-1 fw-semibold text-white text-decoration-none nav-link-custom">MANPOWER</a>
-        <a href="./dashboardV.html"
-          class="col bg-primary rounded-3 text-center py-1 fw-semibold text-white text-decoration-none nav-link-custom">VEHICLE</a>
-        <a href="./dashboardE.html"
-          class="col bg-primary rounded-3 text-center py-1 fw-semibold text-white text-decoration-none nav-link-custom">EQUIPEMENT</a>
-        <a href="#"
-          class="col bg-primary rounded-3 text-center py-1 fw-semibold text-white text-decoration-none nav-link-custom">AMN</a>
-        <a href="#"
-          class="col bg-primary rounded-3 text-center py-1 fw-semibold text-white text-decoration-none nav-link-custom">UNITS</a>
-        <a href="#"
-          class="col bg-primary rounded-3 text-center py-1 fw-semibold text-white text-decoration-none nav-link-custom">MISC</a>
+  </div>
+  <nav class="navbar navbar-expand-custom navbar-mainbg mb-2 mt-1">
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav">
+        <div class="hori-selector">
+          <div class="left"></div>
+          <div class="right"></div>
+        </div>
+        <li class="nav-item active">
+          <a class="nav-link" href="home.html">HOME</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="dashboardM.html">MANPOWER</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="dashboardV.html">VEHICLE</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="dashboardE.html">EQUIPEMENT</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link">AMN</a>
+        </li>
+        <!-- <li class="nav-item">
+          <a class="nav-link">UNITS</a>
+        </li> -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="unitsDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            UNITS
+          </a>
+          <div class="dropdown-menu" aria-labelledby="unitsDropdown">
+            <a class="dropdown-item" href="#">15 MARATHA LI</a>
+            <a class="dropdown-item" href="#">13 MAHAR</a>
+            <a class="dropdown-item" href="#">15 JAT</a>
+            <a class="dropdown-item" href="#">330 INF BDE</a>
+            <a class="dropdown-item" href="#">330 IBSE</a>
+            <a class="dropdown-item" href="#">257 FD WKSP</a>
+          </div>
+        </li>
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="unitsDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            MISC
+          </a>
+          <div class="dropdown-menu" aria-labelledby="unitsDropdown">
+            <a class="dropdown-item" href="#">A</a>
+            <a class="dropdown-item" href="#">B</a>
+            <a class="dropdown-item" href="#">C</a>
+            <a class="dropdown-item" href="#">D</a>
+            <a class="dropdown-item" href="#">E</a>
+            <a class="dropdown-item" href="#">F</a>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <div class="container-fluid">
+    <div class="main-container">
+      <div class="card left-card p-0">
+        <img src="./SYMBOL/Burj_Day/ASHOK CHAKRA RECEIVING.JPG" class="h-100 w-100">
+      </div>
+      <div class="card middle-card p-0">
+        <img src="./SYMBOL/Burj_Day/9 Nb Sub Shankar Mengre,SC.jpg" class="h-100 w-100">
+      </div>
+      <div class="card right-card p-0">
+        <img src="./SYMBOL/Burj_Day/FINAL PHOTOS UNIT CITATION POONCH - Copy.JPG" class="h-100 w-100">
       </div>
     </div>
-    <div class="main-container">
-      <div class="wrapper">
-        <div class="left border border-dark" style="height: 48vh;"></div>
-        <div class="middle border border-dark" style="height: 48vh;"></div>
-        <div class="right border border-dark" style="height: 48vh;"></div>
+    <div class="bottom">
+      <div class="calendor border border-dark"></div>
+      <div class="library border border-dark"></div>
+      <div class="news border border-dark"></div>
+      <div class="ftn border border-dark"></div>
+      <div class="gallery border border-dark"></div>
+      <div class="aboutus border border-dark">
+        <button class="btn-success btn mt-4 ms-1 p-3"><a href="./overallState.html" class="text-white fw-semibold"
+            style="text-decoration: none;">BDE Final State</a></button>
       </div>
-      <div class="bottom">
-        <div class="calendor border border-dark"></div>
-        <div class="library border border-dark"></div>
-        <div class="news border border-dark"></div>
-        <div class="ftn border border-dark"></div>
-        <div class="gallery border border-dark"></div>
-        <div class="aboutus border border-dark mb-3"></div>
-      </div>
+      <div class="aboutus border border-dark mb-3"></div>
     </div>
   </div>
 </body>
 <script src="app.js"></script>
+<!-- JS Libraries -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+  // --------- Responsive Navbar Active Animation -----------
+  function test() {
+    var tabsNewAnim = $('#navbarSupportedContent');
+    var activeItemNewAnim = tabsNewAnim.find('.active');
+    var activeWidthNewAnimHeight = activeItemNewAnim.innerHeight();
+    var activeWidthNewAnimWidth = activeItemNewAnim.innerWidth();
+    var itemPosNewAnimTop = activeItemNewAnim.position();
+    var itemPosNewAnimLeft = activeItemNewAnim.position();
+    $(".hori-selector").css({
+      "top": itemPosNewAnimTop.top + "px",
+      "left": itemPosNewAnimLeft.left + "px",
+      "height": activeWidthNewAnimHeight + "px",
+      "width": activeWidthNewAnimWidth + "px"
+    });
+    $("#navbarSupportedContent").on("click", "li", function (e) {
+      $('#navbarSupportedContent ul li').removeClass("active");
+      $(this).addClass('active');
+      var activeWidthNewAnimHeight = $(this).innerHeight();
+      var activeWidthNewAnimWidth = $(this).innerWidth();
+      var itemPosNewAnimTop = $(this).position();
+      var itemPosNewAnimLeft = $(this).position();
+      $(".hori-selector").css({
+        "top": itemPosNewAnimTop.top + "px",
+        "left": itemPosNewAnimLeft.left + "px",
+        "height": activeWidthNewAnimHeight + "px",
+        "width": activeWidthNewAnimWidth + "px"
+      });
+    });
+  }
+
+  $(document).ready(function () {
+    setTimeout(function () { test(); }, 100);
+  });
+
+
+  // -------------- Add Active Class on Another Page ----------
+  jQuery(document).ready(function ($) {
+    var path = window.location.pathname.split("/").pop();
+    if (path == '') {
+      path = 'index.html';
+    }
+    var target = $('#navbarSupportedContent ul li a[href="' + path + '"]');
+    target.parent().addClass('active');
+  });
+
+  // Prevent dropdown click from breaking animation
+  $('#navbarSupportedContent .dropdown').on('show.bs.dropdown', function () {
+    $('.hori-selector').css('display', 'none');
+  });
+  $('#navbarSupportedContent .dropdown').on('hide.bs.dropdown', function () {
+    $('.hori-selector').css('display', 'block');
+  });
+
+</script>
 
 </html>

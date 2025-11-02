@@ -1,0 +1,149 @@
+.main-container {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.card {
+  background: linear-gradient(to bottom, #f5f5f5, #e8e8e8);
+  border-radius: 8px;
+  box-shadow: 2px 2px 6px rgba(6, 0, 0, 0.2);
+  padding: 0.5rem;
+  min-height: 100px;
+  height: 55vh;
+  overflow: hidden; /* important to hide zoom overflow */
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  position: relative;
+}
+
+.card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+  transition: transform 0.5s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 4px 6px 12px rgba(0, 0, 0, 0.25);
+}
+
+.card:hover img {
+  transform: scale(1.1);
+}
+
+.right-card,
+.left-card {
+  flex: 0 0 24%;
+  margin: auto;
+}
+
+.middle-card {
+  flex: 0 0 48%;
+  margin: auto;
+}
+
+@media (max-width: 768px) {
+  .right-card,
+  .left-card,
+  .middle-card {
+    flex: 0 0 100%;
+  }
+}
+
+.bottom {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .bottom div {
+      flex: 1;
+      min-width: 180px;
+      /* background-color: #f1f1f1; */
+      border-radius: 8px;
+      padding: 15px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .bottom .calendar,
+    .bottom .library,
+    .bottom .news,
+    .bottom .ftn,
+    .bottom .gallery,
+    .bottom .aboutus {
+      background-color: #fff;
+      border: 1px solid #ddd;
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-position: center;
+    }
+
+    .calendor {
+      background-image: url(../SYMBOL/CALENDER.png);
+    }
+
+    .library {
+      background-image: url(../SYMBOL/Burj_Day/LT\ NAVDEEP\ SINGH\ AMENDED.jpg);
+    }
+
+    .news {
+      background-image: url(../SYMBOL/telephone-icon-clipart-lg.png);
+      
+    }
+
+    .ftn {
+      background-image: url(../SYMBOL/INF\ SOL.png);
+    }
+
+    .gallery {
+      background-image: url(../SYMBOL/upcoming-event-calendar.jpg);
+    }
+
+    .aboutus {
+      background-image: url(.............);
+    }
+
+    /* Calendar, Library, and other sections styling */
+    .bottom div h4 {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 15px;
+    }
+
+    .calendor,
+    .library,
+    .news,
+    .ftn,
+    .gallery,
+    .aboutus {
+      height: 150px;
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-position: center;
+    }
+
+    .calendor:hover,
+    .library:hover,
+    .news:hover,
+    .ftn:hover,
+    .gallery:hover,
+    .aboutus:hover {
+      box-shadow: 0 2px 10px rgba(164, 163, 163, 0.943);
+    }
+
+    @media (max-width: 768px) {
+
+      .bottom {
+        flex-direction: column;
+      }
+
+      .bottom div {
+        min-width: 100%;
+        margin-bottom: 15px;
+      }
+    }
