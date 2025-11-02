@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Manpower Dashboard</title>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Chart.js Date Adapter -->
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
+    <!-- Chart.js Data Labels Plugin -->
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
+    <!-- Bootstrap -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <style>
+      #pieChart {
+        max-width: 100%;
+        height: 250px !important;
+      }
+      .nav-link-custom:hover {
+        background-color: green !important;
+        color: white !important;
+      }
+      .nav-link-custom.active {
+        background-color: green !important;
+      }
+    </style>
+  </head>
+  <body class="bg-light">
+    <div class="container-fluid">
+      <!-- HEADER -->
+      <div class="row">
+        <div class="bg-primary px-3 py-1 border border-dark shadow">
+          <div class="d-flex justify-content gap-2">
+            <div class="div col-1 px-2">
+              <div class="bg-danger w-75 rounded-circle"></div>
+            </div>
+            <div class="div col-10">
+              <div class="p-1">
+                <h3
+                  class="fw-bold fs-1 text-white pt-1 text-decoration-underline"
+                  style="font-family: Trirong, serif"
+                  align="center"
+                >
+                  HQ 330 INF BDE
+                </h3>
+              </div>
+            </div>
+            <div class="div col-1 ps-2">
+              <div class="bg-danger w-75 rounded-circle"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row my-1">
+        <div class="row gap-2 ps-4 text-white" style="font-size: 14px">
+          <a
+            href="./home.html"
+            class="col bg-primary rounded-3 text-center py-1 fw-semibold text-white text-decoration-none nav-link-custom"
+            >HOME</a
+          >
+          <a
+            href="./dashboardM.html"
+            class="col bg-primary rounded-3 text-center py-1 fw-semibold text-white text-decoration-none nav-link-custom"
+            >MANPOWER</a
+          >
+          <a
+            href="./dashboardV.html"
+            class="col bg-primary rounded-3 text-center py-1 fw-semibold text-white text-decoration-none nav-link-custom"
+            >VEHICLE</a
+          >
+          <a
+            href="./dashboardE.html"
+            class="col bg-primary rounded-3 text-center py-1 fw-semibold text-white text-decoration-none nav-link-custom"
+            >EQUIPEMENT</a
+          >
+          <a
+            href="#"
+            class="col bg-primary rounded-3 text-center py-1 fw-semibold text-white text-decoration-none nav-link-custom"
+            >AMN</a
+          >
+          <a
+            href="#"
+            class="col bg-primary rounded-3 text-center py-1 fw-semibold text-white text-decoration-none nav-link-custom"
+            >UNITS</a
+          >
+          <a
+            href="#"
+            class="col bg-primary rounded-3 text-center py-1 fw-semibold text-white text-decoration-none nav-link-custom"
+            >MISC</a
+          >
+        </div>
+      </div>
+      <div style="padding: 6px 16px">
+        <span
+          id="currentUserDisplay"
+          style="font-size: 14px; color: #333; font-weight: 600"
+        ></span>
+      </div>
+
+      <!-- CHARTS -->
+      <div class="row h-full px-3 py-2">
+        <div class="d-flex gap-3">
+          <!-- Bar Chart -->
+          <div class="col-8 shadow border rounded-3 border border-dark">
+            <canvas id="myChart" width="800" height="357"></canvas>
+          </div>
+
+          <!-- Pie Chart -->
+          <div class="col-4">
+            <div class="shadow border p-2 px-5 rounded-3 border border-dark">
+              <canvas id="pieChart"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TABLE (hidden by default) -->
+      <div
+        id="unitTableCard"
+        class="row m-2 px-3 pt-3 card pb-0"
+        style="display: none"
+      >
+        <table
+          class="table table-bordered border-dark text-center"
+          style="font-size: 12px"
+        >
+          <thead>
+            <tr>
+              <th></th>
+              <th></th>
+              <th>AUTH</th>
+              <th>POSTED</th>
+              <th>DEFI</th>
+              <th>LVE</th>
+              <th>TD</th>
+              <th>MH</th>
+              <th>ATT</th>
+              <th>COURSE/CADRE</th>
+              <th>LMC</th>
+              <th>OSL/AWL</th>
+              <th>ABSENT</th>
+              <th>PRESENT</th>
+            </tr>
+          </thead>
+          <tbody class="table-group-divider">
+            <tr>
+              <th id="unit-name" rowspan="4"></th>
+              <th>OFFRS</th>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <th>JCOs</th>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <th>ORs</th>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <th>Total</th>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+        <div id="editForm" style="margin-top: 12px"></div>
+      </div>
+
+    <!-- CHART SCRIPT -->
+    <script>
+      const labels = [
+        "15 Maratha LI",
+        "13 Mahar",
+        "15 Jat",
+        "330 BDE CAMP",
+        "330 IBSC",
+        "257 FD WKSP",
+      ];
+
+      function randomData(count, min, max) {
+        const data = [];
+        for (let i = 0; i < count; i++) {
+          data.push(Math.floor(Math.random() * (max - min + 1)) + min);
+        }
+        return data;
+      }
+
+      // load saved bar data (if admin edited previously) or fall back to defaults
+      function loadSavedBarDataM() {
+        try {
+          const raw = localStorage.getItem("dashboardM_barData");
+          if (!raw) return null;
+          return JSON.parse(raw);
+        } catch (e) {
+          return null;
+        }
+      }
+
+      // Build bar data from table store (authoritative source) to avoid double-counting
+      function buildBarDataFromTableStore() {
+        try {
+          const rawTable = localStorage.getItem("dashboardM_tableData");
+          if (!rawTable) return null;
+          const tableStore = JSON.parse(rawTable);
+          // for each label, sum rows 0..2 for auth/present/absent
+          const authData = [];
+          const presentData = [];
+          const absentData = [];
+          labels.forEach((lab) => {
+            const unit = tableStore[lab];
+            if (!unit) {
+              authData.push(0);
+              presentData.push(0);
+              absentData.push(0);
+              return;
+            }
+            let a = 0,
+              p = 0,
+              ab = 0;
+            for (let r = 0; r < 3; r++) {
+              const row = unit[r] || [];
+              a += Number(row[0] || 0);
+              ab += Number(row[10] || 0);
+              p += Number(row[11] || 0);
+            }
+            authData.push(a);
+            presentData.push(p);
+            absentData.push(ab);
+          });
+
+          return {
+            labels: labels,
+            datasets: [
+              {
+                type: "bar",
+                label: "Authorize",
+                backgroundColor: "rgba(255, 99, 132, 0.5)",
+                borderColor: "rgb(500, 99, 132)",
+                data: authData,
+              },
+              {
+                type: "bar",
+                label: "Present",
+                backgroundColor: "rgba(54, 162, 235, 0.7)",
+                borderColor: "rgb(57, 200, 700)",
+                data: presentData,
+              },
+              {
+                type: "bar",
+                label: "Absent",
+                backgroundColor: "rgba(75, 192, 192, 0.8)",
+                borderColor: "rgb(295, 310, 820, 0.5)",
+                data: absentData,
+              },
+            ],
+          };
+        } catch (e) {
+          return null;
+        }
+      }
+
+      const barData = (function () {
+        // prefer reconstructing chart data from the table store (authoritative)
+        const fromTable = buildBarDataFromTableStore();
+        if (fromTable && fromTable.labels && fromTable.datasets)
+          return fromTable;
+        const saved = loadSavedBarDataM();
+        if (saved && saved.labels && saved.datasets) return saved;
+        return {
+          labels: labels,
+          datasets: [
+            {
+              type: "bar",
+              label: "Authorize",
+              backgroundColor: "rgba(255, 99, 132, 0.5)",
+              borderColor: "rgb(500, 99, 132)",
+              data: randomData(labels.length, 80, 100),
+            },
+            {
+              type: "bar",
+              label: "Present",
+              backgroundColor: "rgba(54, 162, 235, 0.7)",
+              borderColor: "rgb(57, 200, 700)",
+              data: randomData(labels.length, 60, 80),
+            },
+            {
+              type: "bar",
+              label: "Absent",
+              backgroundColor: "rgba(75, 192, 192, 0.8)",
+              borderColor: "rgb(295, 310, 820, 0.5)",
+              data: randomData(labels.length, 0, 20),
+            },
+          ],
+        };
+      })();
+
+      const currentDate = new Date().toLocaleDateString("en-GB", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+      });
+
+      const barConfig = {
+        type: "bar",
+        data: barData,
+        options: {
+          responsive: true,
+          plugins: {
+            title: {
+              display: true,
+              text: "Manpower Pared State",
+              color: "#000",
+              font: {
+                size: 18,
+                weight: "bold",
+              },
+            },
+          },
+          scales: {
+            x: {
+              type: "category",
+              title: {
+                display: true,
+                text: "Departments",
+              },
+              grid: { display: false },
+            },
+            y: {
+              beginAtZero: true,
+              title: {
+                display: true,
+                text: "Count",
+              },
+            },
+          },
+        },
+        plugins: [
+          {
+            id: "dateDisplay",
+            afterDraw: (chart) => {
+              const ctx = chart.ctx;
+              const paddingRight = 15;
+              ctx.save();
+              ctx.font = "bold 14px Arial";
+              ctx.fillStyle = "#000";
+              ctx.textAlign = "right";
+              ctx.fillText(
+                currentDate,
+                chart.chartArea.right - paddingRight,
+                chart.chartArea.top - 30
+              );
+              ctx.restore();
+            },
+          },
+        ],
+      };
+
+      const pieData = {
+        labels: ["M", "M+1", "M+2", "M+3"],
+        datasets: [
+          {
+            label: "Total",
+            data: [350, 270, 120, 80],
+            backgroundColor: [
+              "rgba(255, 99, 132, 0.6)",
+              "rgba(54, 162, 235, 0.6)",
+              "rgba(75, 192, 192, 0.6)",
+              "rgba(255, 205, 86, 0.6)",
+            ],
+            borderColor: [
+              "rgb(255, 99, 132)",
+              "rgb(54, 162, 235)",
+              "rgb(75, 192, 192)",
+              "rgb(255, 205, 86)",
+            ],
+            borderWidth: 1,
+          },
+        ],
+      };
+
+      const pieConfig = {
+        type: "pie",
+        data: pieData,
+        options: {
+          responsive: true,
+          plugins: {
+            title: {
+              display: true,
+              text: "Mobilization",
+              color: "#000",
+              font: {
+                size: 17,
+                weight: "bold",
+              },
+            },
+            legend: {
+              display: false,
+              position: "bottom",
+            },
+            datalabels: {
+              color: "#000",
+              formatter: (value, context) => {
+                return context.chart.data.labels[context.dataIndex];
+              },
+              font: {
+                size: 12,
+              },
+            },
+          },
+        },
+        plugins: [ChartDataLabels],
+      };
+
+      // Render charts
+      const barChart = new Chart(document.getElementById("myChart"), barConfig);
+
+      // Helper: refresh chart view from table store (authoritative) and apply unit filter for non-admin users
+      function refreshChartView() {
+        // build authoritative full chart data
+        const full =
+          buildBarDataFromTableStore() || loadSavedBarDataM() || null;
+        let source = full;
+        if (!source) {
+          // fallback: use existing barChart.data as-is
+          source = barChart.data;
+        }
+
+        // determine current user
+        let userObj = null;
+        try {
+          const raw = localStorage.getItem("userCredentials");
+          userObj = raw ? JSON.parse(raw) : null;
+        } catch (e) {
+          userObj = null;
+        }
+
+        // If user has an assigned unit (non-admin), filter the chart to show only their unit
+        if (userObj && userObj.unit && userObj.username !== "admin") {
+          const unitIndex = labels.indexOf(userObj.unit);
+          if (unitIndex !== -1) {
+            const filtered = { labels: [labels[unitIndex]], datasets: [] };
+            source.datasets.forEach((ds) => {
+              const val =
+                ds.data && ds.data[unitIndex] != null ? ds.data[unitIndex] : 0;
+              filtered.datasets.push(Object.assign({}, ds, { data: [val] }));
+            });
+            barChart.data = filtered;
+            barChart.update();
+            return;
+          }
+        }
+
+        // otherwise show full data
+        barChart.data = source;
+        barChart.update();
+      }
+
+      // initialize view
+      refreshChartView();
+      const pieChart = new Chart(
+        document.getElementById("pieChart"),
+        pieConfig
+      );
+
+      // Table show/hide on bar click
+      // helper: load/save table data for this dashboard
+      function loadTableDataM() {
+        try {
+          const raw = localStorage.getItem("dashboardM_tableData");
+          return raw ? JSON.parse(raw) : {};
+        } catch (e) {
+          return {};
+        }
+      }
+      function saveTableDataM(obj) {
+        try {
+          localStorage.setItem("dashboardM_tableData", JSON.stringify(obj));
+        } catch (e) {}
+      }
+
+      document.getElementById("myChart").onclick = function (evt) {
+        // try to get elements at the clicked index (intersect:false allows clicking labels)
+        let points = barChart.getElementsAtEventForMode(
+          evt,
+          "index",
+          { intersect: false },
+          false
+        );
+        let firstPoint = points && points[0];
+        let idx = firstPoint ? firstPoint.index : null;
+        let label = idx != null ? barChart.data.labels[idx] : null;
+
+        // fallback: if no points (some Chart.js versions don't return items when clicking labels),
+        // map the mouse X pixel to the nearest category index using the x scale
+        if (idx == null) {
+          try {
+            const rect = evt.target.getBoundingClientRect();
+            const clickX =
+              (evt.clientX || (evt.touches && evt.touches[0].clientX)) -
+              rect.left;
+            const xScale = barChart.scales.x;
+            if (xScale && typeof xScale.getValueForPixel === "function") {
+              // getValueForPixel may return fractional index for category scale; round to nearest
+              const maybe = xScale.getValueForPixel(clickX);
+              if (maybe != null) {
+                idx = Math.round(maybe);
+              }
+            } else if (
+              xScale &&
+              typeof xScale.getPixelForValue === "function"
+            ) {
+              // fallback: iterate labels and find nearest pixel
+              let best = { idx: 0, dist: Infinity };
+              for (let i = 0; i < barChart.data.labels.length; i++) {
+                const px = xScale.getPixelForValue(i);
+                const d = Math.abs(px - clickX);
+                if (d < best.dist) {
+                  best = { idx: i, dist: d };
+                }
+              }
+              idx = best.idx;
+            }
+            if (idx != null) label = barChart.data.labels[idx];
+          } catch (e) {
+            // ignore fallback errors
+          }
+        }
+
+        if (idx != null) {
+          // Show table card
+          const tableCard = document.getElementById("unitTableCard");
+          const unitHeading = document.getElementById("unit-name");
+          const editForm = document.getElementById("editForm");
+
+          if (tableCard && unitHeading && editForm) {
+            tableCard.style.display = "block";
+            unitHeading.textContent = label;
+
+            // determine logged-in user object and whether they can edit this unit
+            const currentUser = localStorage.getItem("currentUser");
+            let userObj = null;
+            try {
+              const raw = localStorage.getItem("userCredentials");
+              userObj = raw ? JSON.parse(raw) : null;
+            } catch (e) {
+              userObj = null;
+            }
+            // user can edit only if their assigned unit matches the clicked label
+            const isEditor = !!(userObj && userObj.unit === label);
+
+            // load table data map and unit data if exists
+            const tableStore = loadTableDataM();
+            const unitStore = tableStore[label] || null;
+
+            const tbody = document.querySelector("#unitTableCard table tbody");
+            const rows = Array.from(tbody.querySelectorAll("tr"));
+            const numericCols = rows[0].querySelectorAll("td").length;
+
+            let unitData = unitStore;
+            if (!unitData) {
+              unitData = rows.map(() =>
+                Array.from({ length: numericCols }).map(() => 0)
+              );
+            }
+
+            // ensure computed columns and totals are present in unitData before rendering
+            // if unitData came from store it should already contain computed cols, but compute defensively
+            for (let r = 0; r < unitData.length; r++) {
+              const row =
+                unitData[r] || Array.from({ length: numericCols }).map(() => 0);
+              // Defi = Auth - Posted
+              row[2] = Number(row[0] || 0) - Number(row[1] || 0);
+              // Absent = sum cols 3..9
+              let absent = 0;
+              for (let ci = 3; ci <= 9; ci++) absent += Number(row[ci] || 0);
+              row[10] = absent;
+              // Present = Posted - Absent
+              row[11] = Number(row[1] || 0) - absent;
+              unitData[r] = row;
+            }
+            // recompute Total row as sums of rows 0..2
+            const totals = [];
+            for (let ci = 0; ci < numericCols; ci++) {
+              let s = 0;
+              for (let r = 0; r < 3; r++)
+                s += Number((unitData[r] && unitData[r][ci]) || 0);
+              totals[ci] = s;
+            }
+            unitData[3] = totals;
+
+            // populate cells: make computed cols (2,10,11) and the Total row read-only (text), others editable for admin
+            rows.forEach((tr, ri) => {
+              const tds = Array.from(tr.querySelectorAll("td"));
+              tds.forEach((td, ci) => {
+                const val =
+                  unitData[ri] && unitData[ri][ci] != null
+                    ? unitData[ri][ci]
+                    : 0;
+                const isComputedCol = [2, 10, 11].includes(ci);
+                const isTotalRow = ri === 3;
+                if (isComputedCol || isTotalRow) {
+                  td.textContent = String(val);
+                } else if (isEditor) {
+                  td.innerHTML = `<input type="number" class="m-table-input" data-row="${ri}" data-col="${ci}" value="${val}" style="width:80px;padding:4px" />`;
+                } else {
+                  td.textContent = String(val);
+                }
+              });
+            });
+
+            // controls
+            if (isEditor) {
+              editForm.innerHTML =
+                '<div style="margin-top:10px"><button id="save-table-m" class="btn btn-success btn-sm">Save Table</button> <button id="cancel-table-m" class="btn btn-secondary btn-sm">Cancel</button></div>';
+              document
+                .getElementById("cancel-table-m")
+                .addEventListener("click", () => {
+                  editForm.innerHTML = "";
+                  tableCard.style.display = "none";
+                });
+
+              document
+                .getElementById("save-table-m")
+                .addEventListener("click", () => {
+                  // read numeric inputs into unitData
+                  const inputs = Array.from(
+                    document.querySelectorAll("#unitTableCard .m-table-input")
+                  );
+                  inputs.forEach((inp) => {
+                    const r = Number(inp.dataset.row);
+                    const c = Number(inp.dataset.col);
+                    const v = Number(inp.value) || 0;
+                    unitData[r][c] = v;
+                  });
+
+                  // Now compute derived columns per your spec:
+                  // Defi = Auth - Posted (col 2)
+                  // Absent = sum(Lve, TD, MH, ATT, Course/Cadre, LMC, OSL/AWL) -> cols 3..9 -> stored in col 10
+                  // Present = Posted - Absent -> stored in col 11
+                  for (let r = 0; r < unitData.length; r++) {
+                    const row = unitData[r] || [];
+                    const auth = Number(row[0] || 0);
+                    const posted = Number(row[1] || 0);
+                    row[2] = auth - posted; // Defi
+
+                    // sum absent columns 3..9
+                    let absent = 0;
+                    for (let ci = 3; ci <= 9; ci++)
+                      absent += Number(row[ci] || 0);
+                    row[10] = absent;
+
+                    row[11] = posted - absent; // Present
+                    unitData[r] = row;
+                  }
+
+                  // Recompute Total row (index 3) as sum of rows 0..2 for each column
+                  const totals = [];
+                  const cols = unitData[0] ? unitData[0].length : 12;
+                  for (let ci = 0; ci < cols; ci++) {
+                    let s = 0;
+                    for (let r = 0; r < 3; r++)
+                      s += Number((unitData[r] && unitData[r][ci]) || 0);
+                    totals[ci] = s;
+                  }
+                  unitData[3] = totals;
+
+                  // persist
+                  tableStore[label] = unitData;
+                  saveTableDataM(tableStore);
+
+                  // update DOM cells to reflect computed values (computed cols: 2,10,11 are read-only text)
+                  rows.forEach((tr, ri) => {
+                    const tds = Array.from(tr.querySelectorAll("td"));
+                    tds.forEach((td, ci) => {
+                      const val =
+                        unitData[ri] && unitData[ri][ci] != null
+                          ? unitData[ri][ci]
+                          : 0;
+                      if ([2, 10, 11].includes(ci)) {
+                        // show computed values as text
+                        td.textContent = String(val);
+                      } else {
+                        const inp = td.querySelector("input");
+                        if (inp) inp.value = val;
+                        else td.textContent = val;
+                      }
+                    });
+                  });
+
+                  // Update chart datasets for this unit (sum across the rows)
+                  // Sum only rows 0..2 (OFFRS, JCOs, ORs) to avoid double-counting the Total row
+                  let authSum = 0,
+                    absentSum = 0,
+                    presentSum = 0;
+                  for (let r = 0; r < 3; r++) {
+                    const row = unitData[r] || [];
+                    authSum += Number(row[0] || 0);
+                    absentSum += Number(row[10] || 0);
+                    presentSum += Number(row[11] || 0);
+                  }
+
+                  // persist tableStore and rebuild authoritative chart data, then refresh view
+                  try {
+                    tableStore[label] = unitData;
+                    saveTableDataM(tableStore);
+                    const full = buildBarDataFromTableStore();
+                    if (full) {
+                      try {
+                        localStorage.setItem(
+                          "dashboardM_barData",
+                          JSON.stringify(full)
+                        );
+                      } catch (e) {}
+                    }
+                    refreshChartView();
+                  } catch (e) {}
+
+                  if (window.updateDashboardMSummaries)
+                    window.updateDashboardMSummaries();
+                  editForm.innerHTML = "";
+                  alert("Table saved, computed and chart updated.");
+                });
+            } else {
+              editForm.innerHTML = "";
+            }
+          }
+        }
+      };
+    </script>
+  <!--DHAIRYASHIL ADDING DATA-->
+  <script src="app.js"></script>
+
+  <!-- UNIT SUMMARY TABLES (Present & Absent) -->
+  <div class="row px-3 pb-3">
+    <div
+      id="summaryToggle"
+      class="bg-primary text-white text-center py-2 fw-bold rounded-3 border border-dark shadow"
+      style="cursor: pointer"
+    >
+      CLICK HERE TO VIEW ALL UNITS SUMMARY
+    </div>
+
+    <div
+      id="summaryTablesDiv"
+      class="card mt-2 px-3 pt-3 pb-3 border border-dark shadow"
+      style="display: none"
+    >
+      <div class="row">
+        <!-- PRESENT TABLE -->
+        <div class="col-md-6">
+          <h6
+            class="bg-success text-white text-center py-1 rounded-2 border border-dark"
+          >
+            PRESENT STRENGTH
+          </h6>
+          <table
+            class="table table-bordered border-dark text-center align-middle"
+            style="font-size: 13px"
+          >
+            <thead class="table-secondary">
+              <tr>
+                <th>Unit</th>
+                <th>Offrs</th>
+                <th>JCOs</th>
+                <th>ORs</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+            <tbody id="presentTableBody"></tbody>
+            <tfoot class="table-info fw-bold">
+              <tr>
+                <td>GRAND TOTAL</td>
+                <td id="presentGtOffrs">0</td>
+                <td id="presentGtJcos">0</td>
+                <td id="presentGtOrs">0</td>
+                <td id="presentGtTotal">0</td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+
+        <!-- ABSENT TABLE -->
+        <div class="col-md-6">
+          <h6
+            class="bg-danger text-white text-center py-1 rounded-2 border border-dark"
+          >
+            ABSENT STRENGTH
+          </h6>
+          <table
+            class="table table-bordered border-dark text-center align-middle"
+            style="font-size: 13px"
+          >
+            <thead class="table-secondary">
+              <tr>
+                <th>Unit</th>
+                <th>Offrs</th>
+                <th>JCOs</th>
+                <th>ORs</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+            <tbody id="absentTableBody"></tbody>
+            <tfoot class="table-info fw-bold">
+              <tr>
+                <td>GRAND TOTAL</td>
+                <td id="absentGtOffrs">0</td>
+                <td id="absentGtJcos">0</td>
+                <td id="absentGtOrs">0</td>
+                <td id="absentGtTotal">0</td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ============ BASE DATA (Same as your chart units) ============
+    const unitSummary = [
+      { unit: "15 Maratha LI", offrs: 12, jcos: 25, ors: 520 },
+      { unit: "13 Mahar", offrs: 10, jcos: 22, ors: 510 },
+      { unit: "15 Jat", offrs: 11, jcos: 24, ors: 495 },
+      { unit: "330 BDE CAMP", offrs: 8, jcos: 12, ors: 110 },
+      { unit: "330 IBSC", offrs: 6, jcos: 10, ors: 90 },
+      { unit: "257 FD WKSP", offrs: 7, jcos: 15, ors: 130 },
+    ];
+
+    // ============ RANDOM ABSENT VALUES (you can replace with real data) ============
+    let absentSummary = unitSummary.map((u) => ({
+      unit: u.unit,
+      offrs: Math.floor(Math.random() * 3),
+      jcos: Math.floor(Math.random() * 5),
+      ors: Math.floor(Math.random() * 40),
+    }));
+
+    // ============ PRESENT VALUES (derived) ============
+    let presentSummary = unitSummary.map((u, i) => ({
+      unit: u.unit,
+      offrs: u.offrs - absentSummary[i].offrs,
+      jcos: u.jcos - absentSummary[i].jcos,
+      ors: u.ors - absentSummary[i].ors,
+    }));
+
+    // If stored table data exists, override absent/present per unit
+    (function applyStoredTableOverrides() {
+      try {
+        const raw = localStorage.getItem("dashboardM_tableData");
+        if (!raw) return;
+        const tableStore = JSON.parse(raw);
+        unitSummary.forEach((u, i) => {
+          const unitData = tableStore[u.unit];
+          if (!unitData) return;
+          // unitData is array of rows: OFFRS, JCOs, ORs; columns follow table head
+          const offrsAbsent = Number((unitData[0] && unitData[0][10]) || 0);
+          const jcosAbsent = Number((unitData[1] && unitData[1][10]) || 0);
+          const orsAbsent = Number((unitData[2] && unitData[2][10]) || 0);
+          absentSummary[i] = {
+            unit: u.unit,
+            offrs: offrsAbsent,
+            jcos: jcosAbsent,
+            ors: orsAbsent,
+          };
+
+          const offrsPresent = Number((unitData[0] && unitData[0][11]) || 0);
+          const jcosPresent = Number((unitData[1] && unitData[1][11]) || 0);
+          const orsPresent = Number((unitData[2] && unitData[2][11]) || 0);
+          presentSummary[i] = {
+            unit: u.unit,
+            offrs: offrsPresent,
+            jcos: jcosPresent,
+            ors: orsPresent,
+          };
+        });
+      } catch (e) {
+        // ignore
+      }
+    })();
+
+    // ============ TABLE FILL FUNCTION ============
+    function fillTable(data, tableBodyId, totalsIds) {
+      const tbody = document.getElementById(tableBodyId);
+      tbody.innerHTML = "";
+      let tOffrs = 0,
+        tJcos = 0,
+        tOrs = 0;
+      data.forEach((u) => {
+        const total = u.offrs + u.jcos + u.ors;
+        tOffrs += u.offrs;
+        tJcos += u.jcos;
+        tOrs += u.ors;
+
+        const row = `
+        <tr>
+          <td>${u.unit}</td>
+          <td>${u.offrs}</td>
+          <td>${u.jcos}</td>
+          <td>${u.ors}</td>
+          <td>${total}</td>
+        </tr>`;
+        tbody.insertAdjacentHTML("beforeend", row);
+      });
+      document.getElementById(totalsIds.offrs).textContent = tOffrs;
+      document.getElementById(totalsIds.jcos).textContent = tJcos;
+      document.getElementById(totalsIds.ors).textContent = tOrs;
+      document.getElementById(totalsIds.total).textContent =
+        tOffrs + tJcos + tOrs;
+    }
+
+    // Fill both tables
+    fillTable(presentSummary, "presentTableBody", {
+      offrs: "presentGtOffrs",
+      jcos: "presentGtJcos",
+      ors: "presentGtOrs",
+      total: "presentGtTotal",
+    });
+
+    fillTable(absentSummary, "absentTableBody", {
+      offrs: "absentGtOffrs",
+      jcos: "absentGtJcos",
+      ors: "absentGtOrs",
+      total: "absentGtTotal",
+    });
+
+    // expose an updater so other scripts (chart save handlers) can refresh summaries
+    window.updateDashboardMSummaries = function () {
+      // recompute from stored table data if present
+      try {
+        const raw = localStorage.getItem("dashboardM_tableData");
+        if (!raw) return;
+        const tableStore = JSON.parse(raw);
+        const newAbsent = [];
+        const newPresent = [];
+        unitSummary.forEach((u, i) => {
+          const unitData = tableStore[u.unit];
+          if (unitData) {
+            const offrsAbsent = Number((unitData[0] && unitData[0][10]) || 0);
+            const jcosAbsent = Number((unitData[1] && unitData[1][10]) || 0);
+            const orsAbsent = Number((unitData[2] && unitData[2][10]) || 0);
+            newAbsent.push({
+              unit: u.unit,
+              offrs: offrsAbsent,
+              jcos: jcosAbsent,
+              ors: orsAbsent,
+            });
+
+            const offrsPresent = Number((unitData[0] && unitData[0][11]) || 0);
+            const jcosPresent = Number((unitData[1] && unitData[1][11]) || 0);
+            const orsPresent = Number((unitData[2] && unitData[2][11]) || 0);
+            newPresent.push({
+              unit: u.unit,
+              offrs: offrsPresent,
+              jcos: jcosPresent,
+              ors: orsPresent,
+            });
+          } else {
+            // fallback to existing arrays
+            newAbsent.push(absentSummary[i]);
+            newPresent.push(presentSummary[i]);
+          }
+        });
+        fillTable(newPresent, "presentTableBody", {
+          offrs: "presentGtOffrs",
+          jcos: "presentGtJcos",
+          ors: "presentGtOrs",
+          total: "presentGtTotal",
+        });
+        fillTable(newAbsent, "absentTableBody", {
+          offrs: "absentGtOffrs",
+          jcos: "absentGtJcos",
+          ors: "absentGtOrs",
+          total: "absentGtTotal",
+        });
+      } catch (e) {
+        /* ignore */
+      }
+    };
+
+    // ============ TOGGLE VISIBILITY ============
+    document
+      .getElementById("summaryToggle")
+      .addEventListener("click", function () {
+        const div = document.getElementById("summaryTablesDiv");
+        div.style.display = div.style.display === "none" ? "block" : "none";
+        this.textContent =
+          div.style.display === "block"
+            ? "CLICK HERE TO HIDE ALL UNITS SUMMARY"
+            : "CLICK HERE TO VIEW ALL UNITS SUMMARY";
+      });
+  </script>
+</body>
+</html>

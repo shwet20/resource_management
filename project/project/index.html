@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Home</title>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Chart.js Date Adapter -->
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
+    <!-- Chart.js Data Labels Plugin -->
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
+    <!-- Bootstrap -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <style>
+      .index > .logout {
+        display: none;
+      }
+
+      .container {
+        width: -webkit-fill-available;
+        height: -webkit-fill-available;
+        height: calc(100vh - 147px);
+        display: flex;
+        padding: 0 2%;
+        padding: 10px;
+
+        .left {
+          width: 100%;
+          height: 100%;
+          border: 1px solid black;
+          background-image: url("./SYMBOL/Burj_Day/FINAL\ PHOTOS\ UNIT\ CITATION\ POONCH.JPG");
+          background-size: cover;
+        }
+        .middle {
+          width: 100%;
+          gap: 2vh;
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          margin: auto;
+          padding: 0 10%;
+
+          .flex {
+            width: fit-content;
+            margin: 2vh auto;
+            display: flex;
+            width: fit-content;
+            margin: 2vh auto;
+            align-items: center;
+            flex-direction: column;
+            gap: 5px;
+            button {
+              padding: 5px 20px;
+            }
+          }
+          button {
+            background-color: rgb(88, 128, 237);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 5%;
+          }
+        }
+        .right {
+          width: 100%;
+
+          height: 100%;
+
+          border: 1px solid black;
+          background-image: url("./SYMBOL/Burj_Day/IMG-20190315-WA0013.jpg");
+          background-size: cover;
+        }
+      }
+      .helpline {
+        width: 100%;
+        display: flex;
+        justify-content: end;
+      }
+      #pieChart {
+        max-width: 100%;
+        height: 250px !important;
+      }
+      .nav-link-custom:hover {
+        background-color: green !important;
+        color: white !important;
+      }
+      .nav-link-custom.active {
+        background-color: green !important;
+        color: white !important;
+      }
+    </style>
+  </head>
+
+  <body class="bg-light">
+    <div class="container-fluid">
+      <!-- HEADER -->
+      <div class="row">
+        <div class="bg-primary px-3 py-2">
+          <div class="d-flex justify-content gap-2 index">
+            <div class="div col-1 px-2">
+              <div class="bg-danger w-75 p-3 py-3 rounded-circle mt-1"></div>
+            </div>
+            <div class="div col-10">
+              <div class="p-1">
+                <h3 class="font-bold text-white pt-1" align="center">
+                  HQ 330 INF BDE
+                </h3>
+              </div>
+            </div>
+            <div class="div col-1 ps-4">
+              <div class="bg-danger w-75 p-3 py-3 rounded-circle mt-1"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="left"></div>
+        <div class="middle">
+          <button onclick="window.location.href='./home.html'">
+            CDR Login Page
+          </button>
+          <input type="text" placeholder="User Name" />
+          <input type="password" placeholder="Password" />
+          <div class="flex">
+            <button>Forget Password</button>
+            <button>Renew Password</button>
+          </div>
+        </div>
+        <div class="right"></div>
+      </div>
+      <div class="helpline">Helpline No - 9999999999</div>
+    </div>
+  </body>
+  <script src="app.js"></script>
+  <script>
+    // Demo users (at least 10)
+    const USERS = [
+      // Admin / viewer (cannot edit)
+      {
+        username: "admin",
+        password: "12345",
+        fullname: "Administrator",
+        role: "viewer",
+      },
+      // Unit-specific users (can edit only their assigned unit)
+      {
+        username: "15maratha",
+        password: "m1",
+        fullname: "15 Maratha LI User",
+        unit: "15 Maratha LI",
+      },
+      {
+        username: "13mahar",
+        password: "m2",
+        fullname: "13 Mahar User",
+        unit: "13 Mahar",
+      },
+      {
+        username: "15jat",
+        password: "m3",
+        fullname: "15 Jat User",
+        unit: "15 Jat",
+      },
+      {
+        username: "330bde",
+        password: "m4",
+        fullname: "330 BDE CAMP User",
+        unit: "330 BDE CAMP",
+      },
+      {
+        username: "330ibsc",
+        password: "m5",
+        fullname: "330 IBSC User",
+        unit: "330 IBSC",
+      },
+      {
+        username: "257fd",
+        password: "m6",
+        fullname: "257 FD WKSP User",
+        unit: "257 FD WKSP",
+      },
+      // Other demo users (non-editing generic)
+      { username: "user1", password: "pass1", fullname: "User One" },
+      { username: "user2", password: "pass2", fullname: "User Two" },
+      { username: "user3", password: "pass3", fullname: "User Three" },
+    ];
+
+    // Handle login button click
+    document
+      .querySelector('button[onclick*="home.html"]')
+      .addEventListener("click", function (event) {
+        event.preventDefault(); // stop page reload
+        const username = document
+          .querySelector('input[placeholder="User Name"]')
+          .value.trim();
+        const password = document
+          .querySelector('input[placeholder="Password"]')
+          .value.trim();
+
+        if (!username || !password) {
+          alert("Please enter both username and password!");
+          return;
+        }
+
+        const matched = USERS.find(
+          (u) => u.username === username && u.password === password
+        );
+        if (matched) {
+          // save full user object (avoid storing raw password in production)
+          localStorage.setItem("userCredentials", JSON.stringify(matched));
+          localStorage.setItem("currentUser", matched.username);
+          alert(
+            `Login successful! Welcome ${matched.fullname || matched.username}`
+          );
+          window.location.href = "./home.html"; // redirect after login
+        } else {
+          alert("Invalid username or password!");
+        }
+      });
+
+    // Forget Password
+    document
+      .querySelector(".flex button:nth-child(1)")
+      .addEventListener("click", function () {
+        alert("Please contact admin to reset your password.");
+      });
+
+    // Renew Password
+    document
+      .querySelector(".flex button:nth-child(2)")
+      .addEventListener("click", function () {
+        alert("Your password renewal request has been sent.");
+      });
+  </script>
+</html>

@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Vehicles Dashboard</title>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Chart.js Date Adapter -->
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
+    <!-- Chart.js Data Labels Plugin -->
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
+    <!-- Bootstrap -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <style>
+      #pieChart {
+        max-width: 100%;
+        height: 250px !important;
+      }
+      .nav-link-custom:hover {
+        background-color: green !important;
+        color: white !important;
+      }
+      .nav-link-custom.active {
+        background-color: green !important;
+        color: white !important;
+      }
+    </style>
+  </head>
+
+  <body class="bg-light">
+    <div class="container-fluid">
+      <!-- HEADER -->
+      <div class="row">
+        <div class="bg-primary px-3 py-1 border border-dark shadow">
+          <div class="d-flex justify-content gap-2">
+            <div class="div col-1 px-2">
+              <div class="bg-danger w-75 rounded-circle"></div>
+            </div>
+            <div class="div col-10">
+              <div class="p-1">
+                <h3
+                  class="fw-bold fs-1 text-white pt-1 text-decoration-underline"
+                  style="font-family: Trirong, serif"
+                  align="center"
+                >
+                  HQ 330 INF BDE
+                </h3>
+              </div>
+            </div>
+            <div class="div col-1 ps-2">
+              <div class="bg-danger w-75 rounded-circle"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row my-1">
+        <div class="row gap-2 ps-4 text-white" style="font-size: 14px">
+          <a
+            href="./home.html"
+            class="col bg-primary rounded-3 text-center py-1 fw-semibold text-white text-decoration-none nav-link-custom"
+            >HOME</a
+          >
+          <a
+            href="./dashboardM.html"
+            class="col bg-primary rounded-3 text-center py-1 fw-semibold text-white text-decoration-none nav-link-custom"
+            >MANPOWER</a
+          >
+          <a
+            href="./dashboardV.html"
+            class="col bg-primary rounded-3 text-center py-1 fw-semibold text-white text-decoration-none nav-link-custom"
+            >VEHICLE</a
+          >
+          <a
+            href="./dashboardE.html"
+            class="col bg-primary rounded-3 text-center py-1 fw-semibold text-white text-decoration-none nav-link-custom"
+            >EQUIPEMENT</a
+          >
+          <a
+            href="#"
+            class="col bg-primary rounded-3 text-center py-1 fw-semibold text-white text-decoration-none nav-link-custom"
+            >AMN</a
+          >
+          <a
+            href="#"
+            class="col bg-primary rounded-3 text-center py-1 fw-semibold text-white text-decoration-none nav-link-custom"
+            >UNITS</a
+          >
+          <a
+            href="#"
+            class="col bg-primary rounded-3 text-center py-1 fw-semibold text-white text-decoration-none nav-link-custom"
+            >MISC</a
+          >
+        </div>
+      </div>
+
+      <!-- CHARTS -->
+      <div class="row h-full px-3 py-2">
+        <div class="d-flex gap-3">
+          <!-- Bar Chart -->
+          <div class="col-8 shadow border rounded-3 border border-dark">
+            <canvas id="myChart" width="800" height="357"></canvas>
+          </div>
+
+          <!-- Pie Chart -->
+          <div class="col-4">
+            <div class="shadow border p-2 px-5 rounded-3 border border-dark">
+              <canvas id="pieChart"></canvas>
+            </div>
+            <div
+              class="mt-4 py-1 rounded-4 border border-dark"
+              style="background-color: rgba(13, 140, 224, 0.886)"
+            >
+              <a
+                href="./vehState.html"
+                style="text-decoration: none; color: inherit"
+              >
+                <h6 class="text-center p-3 text-white">UNIT WISE VEH STATE</h6>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TABLE (hidden by default) -->
+      <div
+        id="unitTableCard"
+        class="row m-2 px-3 pt-3 card pb-0"
+        style="display: none"
+      >
+        <table
+          class="table table-bordered border-dark text-center"
+          style="font-size: 12px"
+        >
+          <thead>
+            <tr>
+              <th></th>
+              <th></th>
+              <th>SCORPIO</th>
+              <th>MG</th>
+              <th>STORME</th>
+              <th>MG (ATGM)</th>
+              <th>2.5 TON</th>
+              <th>ALS</th>
+              <th>HMV</th>
+              <th>WB 2KL</th>
+              <th>WB 5KL</th>
+              <th>TATRA</th>
+            </tr>
+          </thead>
+          <tbody class="table-group-divider">
+            <tr>
+              <th id="unit-name" rowspan="4"></th>
+              <th>AUTH</th>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <th>ON ROAD</th>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <th>OFF ROAD</th>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <th>WKSP</th>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <th>Total</th>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+        <div id="editForm" style="margin-top: 12px"></div>
+      </div>
+    </div>
+
+    <!-- CHART SCRIPT -->
+    <script>
+      const labels = [
+        "15 Maratha LI",
+        "13 Mahar",
+        "15 Jat",
+        "330 BDE CAMP",
+        "330 IBSC",
+        "257 FD WKSP",
+      ];
+
+      function randomData(count, min, max) {
+        const data = [];
+        for (let i = 0; i < count; i++) {
+          data.push(Math.floor(Math.random() * (max - min + 1)) + min);
+        }
+        return data;
+      }
+
+      const barData = {
+        labels: labels,
+        datasets: [
+          {
+            type: "bar",
+            label: "AUTH",
+            backgroundColor: "rgba(255, 99, 132, 0.5)",
+            borderColor: "rgb(500, 99, 132)",
+            data: randomData(labels.length, 80, 100),
+          },
+          {
+            type: "bar",
+            label: "ON ROAD",
+            backgroundColor: "rgba(54, 162, 235, 0.7)",
+            borderColor: "rgb(57, 200, 700)",
+            data: randomData(labels.length, 60, 80),
+          },
+          {
+            type: "bar",
+            label: "OFF ROAD",
+            backgroundColor: "rgba(75, 192, 192, 0.8)",
+            borderColor: "rgb(295, 310, 820, 0.5)",
+            data: randomData(labels.length, 0, 20),
+          },
+        ],
+      };
+
+      const currentDate = new Date().toLocaleDateString("en-GB", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+      });
+
+      const barConfig = {
+        type: "bar",
+        data: barData,
+        options: {
+          responsive: true,
+          plugins: {
+            title: {
+              display: true,
+              text: "VEH STATE",
+              color: "#000",
+              font: {
+                size: 18,
+                weight: "bold",
+              },
+            },
+          },
+          scales: {
+            x: {
+              type: "category",
+              title: {
+                display: true,
+                text: "Departments",
+              },
+              grid: { display: false },
+            },
+            y: {
+              beginAtZero: true,
+              title: {
+                display: true,
+                text: "Count",
+              },
+            },
+          },
+        },
+        plugins: [
+          {
+            id: "dateDisplay",
+            afterDraw: (chart) => {
+              const ctx = chart.ctx;
+              const paddingRight = 15;
+              ctx.save();
+              ctx.font = "bold 14px Arial";
+              ctx.fillStyle = "#000";
+              ctx.textAlign = "right";
+              ctx.fillText(
+                currentDate,
+                chart.chartArea.right - paddingRight,
+                chart.chartArea.top - 30
+              );
+              ctx.restore();
+            },
+          },
+        ],
+      };
+
+      const pieData = {
+        labels: ["M", "M+1", "M+2", "M+3"],
+        datasets: [
+          {
+            label: "Total",
+            data: [350, 270, 120, 80],
+            backgroundColor: [
+              "rgba(255, 99, 132, 0.6)",
+              "rgba(54, 162, 235, 0.6)",
+              "rgba(75, 192, 192, 0.6)",
+              "rgba(255, 205, 86, 0.6)",
+            ],
+            borderColor: [
+              "rgb(255, 99, 132)",
+              "rgb(54, 162, 235)",
+              "rgb(75, 192, 192)",
+              "rgb(255, 205, 86)",
+            ],
+            borderWidth: 1,
+          },
+        ],
+      };
+
+      const pieConfig = {
+        type: "pie",
+        data: pieData,
+        options: {
+          responsive: true,
+          plugins: {
+            title: {
+              display: true,
+              text: "Mobilization",
+              color: "#000",
+              font: {
+                size: 17,
+                weight: "bold",
+              },
+            },
+            legend: {
+              display: false,
+              position: "bottom",
+            },
+            datalabels: {
+              color: "#000",
+              formatter: (value, context) => {
+                return context.chart.data.labels[context.dataIndex];
+              },
+              font: {
+                size: 12,
+              },
+            },
+          },
+        },
+        plugins: [ChartDataLabels],
+      };
+
+      // Render charts
+      const barChart = new Chart(document.getElementById("myChart"), barConfig);
+
+      // Build bar data from table store (authoritative source)
+      function buildBarDataFromTableStoreV() {
+        try {
+          const raw = localStorage.getItem("dashboardV_tableData");
+          if (!raw) return null;
+          const tableStore = JSON.parse(raw);
+          const auth = [];
+          const onroad = [];
+          const offroad = [];
+          labels.forEach((lab) => {
+            const unit = tableStore[lab];
+            if (!unit) {
+              auth.push(0);
+              onroad.push(0);
+              offroad.push(0);
+              return;
+            }
+            // sum rows 0..2 (AUTH, ON ROAD, OFF ROAD)
+            let a = 0,
+              o = 0,
+              f = 0;
+            for (let r = 0; r < 3; r++) {
+              const row = unit[r] || [];
+              const s = (row || []).reduce((sum, x) => sum + Number(x || 0), 0);
+              if (r === 0) a = s;
+              else if (r === 1) o = s;
+              else if (r === 2) f = s;
+            }
+            auth.push(a);
+            onroad.push(o);
+            offroad.push(f);
+          });
+          return {
+            labels: labels,
+            datasets: [
+              Object.assign({}, barData.datasets[0], { data: auth }),
+              Object.assign({}, barData.datasets[1], { data: onroad }),
+              Object.assign({}, barData.datasets[2], { data: offroad }),
+            ],
+          };
+        } catch (e) {
+          return null;
+        }
+      }
+
+      // Helper: refresh chart view from table store (authoritative) and apply unit filter for non-admin users
+      function refreshChartViewV() {
+        const full = buildBarDataFromTableStoreV() || null;
+        let source = full || barChart.data;
+
+        // determine current user
+        let userObj = null;
+        try {
+          const raw = localStorage.getItem("userCredentials");
+          userObj = raw ? JSON.parse(raw) : null;
+        } catch (e) {
+          userObj = null;
+        }
+
+        if (userObj && userObj.unit && userObj.username !== "admin") {
+          const unitIndex = labels.indexOf(userObj.unit);
+          if (unitIndex !== -1) {
+            const filtered = { labels: [labels[unitIndex]], datasets: [] };
+            source.datasets.forEach((ds) => {
+              const val =
+                ds.data && ds.data[unitIndex] != null ? ds.data[unitIndex] : 0;
+              filtered.datasets.push(Object.assign({}, ds, { data: [val] }));
+            });
+            barChart.data = filtered;
+            barChart.update();
+            return;
+          }
+        }
+
+        barChart.data = source;
+        barChart.update();
+      }
+
+      // initialize view
+      refreshChartViewV();
+
+      const pieChart = new Chart(
+        document.getElementById("pieChart"),
+        pieConfig
+      );
+
+      // Table show/hide on bar click - support label clicks and restrict editing to unit users
+      document.getElementById("myChart").onclick = function (evt) {
+        let points = barChart.getElementsAtEventForMode(
+          evt,
+          "index",
+          { intersect: false },
+          false
+        );
+        let firstPoint = points && points[0];
+        let idx = firstPoint ? firstPoint.index : null;
+        let label = idx != null ? barChart.data.labels[idx] : null;
+
+        if (idx == null) {
+          try {
+            const rect = evt.target.getBoundingClientRect();
+            const clickX =
+              (evt.clientX || (evt.touches && evt.touches[0].clientX)) -
+              rect.left;
+            const xScale = barChart.scales.x;
+            if (xScale && typeof xScale.getValueForPixel === "function") {
+              const maybe = xScale.getValueForPixel(clickX);
+              if (maybe != null) idx = Math.round(maybe);
+            } else if (
+              xScale &&
+              typeof xScale.getPixelForValue === "function"
+            ) {
+              let best = { idx: 0, dist: Infinity };
+              for (let i = 0; i < barChart.data.labels.length; i++) {
+                const px = xScale.getPixelForValue(i);
+                const d = Math.abs(px - clickX);
+                if (d < best.dist) best = { idx: i, dist: d };
+              }
+              idx = best.idx;
+            }
+            if (idx != null) label = barChart.data.labels[idx];
+          } catch (e) {
+            // ignore fallback errors
+          }
+        }
+
+        if (idx != null) {
+          const tableCard = document.getElementById("unitTableCard");
+          const unitHeading = document.getElementById("unit-name");
+          const editForm = document.getElementById("editForm");
+          if (tableCard && unitHeading && editForm) {
+            tableCard.style.display = "block";
+            unitHeading.textContent = label;
+
+            // determine logged-in user and edit rights
+            let userObj = null;
+            try {
+              const raw = localStorage.getItem("userCredentials");
+              userObj = raw ? JSON.parse(raw) : null;
+            } catch (e) {
+              userObj = null;
+            }
+            const isEditor = !!(userObj && userObj.unit === label);
+
+            // load table data map and unit data
+            let tableStore = {};
+            try {
+              const raw = localStorage.getItem("dashboardV_tableData");
+              tableStore = raw ? JSON.parse(raw) : {};
+            } catch (e) {
+              tableStore = {};
+            }
+            const unitStore = tableStore[label] || null;
+
+            const tbody = document.querySelector("#unitTableCard table tbody");
+            const rows = Array.from(tbody.querySelectorAll("tr"));
+            const numericCols = rows[0].querySelectorAll("td").length;
+
+            let unitData = unitStore;
+            if (!unitData) {
+              unitData = rows.map(() =>
+                Array.from({ length: numericCols }).map(() => 0)
+              );
+            }
+
+            // populate cells
+            rows.forEach((tr, ri) => {
+              const tds = Array.from(tr.querySelectorAll("td"));
+              tds.forEach((td, ci) => {
+                const val =
+                  unitData[ri] && unitData[ri][ci] != null
+                    ? unitData[ri][ci]
+                    : 0;
+                if (isEditor) {
+                  td.innerHTML = `<input type="number" class="v-table-input" data-row="${ri}" data-col="${ci}" value="${val}" style="width:80px;padding:4px" />`;
+                } else {
+                  td.textContent = val;
+                }
+              });
+            });
+
+            if (isEditor) {
+              editForm.innerHTML =
+                '<div style="margin-top:10px"><button id="save-table-v" class="btn btn-success btn-sm">Save Table</button> <button id="cancel-table-v" class="btn btn-secondary btn-sm">Cancel</button></div>';
+              const saveBtn = document.getElementById("save-table-v");
+              const cancelBtn = document.getElementById("cancel-table-v");
+              saveBtn.disabled = false;
+
+              const inputs = Array.from(
+                document.querySelectorAll("#unitTableCard .v-table-input")
+              );
+              inputs.forEach((inp) =>
+                inp.addEventListener("input", () => (saveBtn.disabled = false))
+              );
+
+              cancelBtn.addEventListener("click", () => {
+                editForm.innerHTML = "";
+                tableCard.style.display = "none";
+              });
+
+              saveBtn.addEventListener("click", () => {
+                const inputsNow = Array.from(
+                  document.querySelectorAll("#unitTableCard .v-table-input")
+                );
+                inputsNow.forEach((inp) => {
+                  const r = Number(inp.dataset.row);
+                  const c = Number(inp.dataset.col);
+                  const v = Number(inp.value) || 0;
+                  unitData[r][c] = v;
+                });
+
+                // persist
+                tableStore[label] = unitData;
+                try {
+                  localStorage.setItem(
+                    "dashboardV_tableData",
+                    JSON.stringify(tableStore)
+                  );
+                } catch (e) {}
+
+                // update chart values (sum rows 0..2)
+                let authSum = 0,
+                  onRoadSum = 0,
+                  offRoadSum = 0;
+                for (let r = 0; r < 3; r++) {
+                  const row = unitData[r] || [];
+                  const rowSum = (row || []).reduce(
+                    (s, x) => s + Number(x || 0),
+                    0
+                  );
+                  if (r === 0) authSum = rowSum;
+                  else if (r === 1) onRoadSum = rowSum;
+                  else if (r === 2) offRoadSum = rowSum;
+                }
+                const unitIndex = labels.indexOf(label);
+                if (unitIndex !== -1) {
+                  barChart.data.datasets[0].data[unitIndex] = authSum;
+                  barChart.data.datasets[1].data[unitIndex] = onRoadSum;
+                  barChart.data.datasets[2].data[unitIndex] = offRoadSum;
+                  barChart.update();
+                  try {
+                    localStorage.setItem(
+                      "dashboardV_barData",
+                      JSON.stringify(barChart.data)
+                    );
+                  } catch (e) {}
+                }
+
+                // disable save until next change
+                saveBtn.disabled = true;
+                alert("Table saved. Chart updated.");
+              });
+            } else {
+              editForm.innerHTML = "";
+            }
+          }
+        }
+      };
+    </script>
+  </body>
+  <script src="app.js"></script>
+</html>

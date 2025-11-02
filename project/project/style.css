@@ -1,0 +1,22 @@
+/* First logo (left) */
+.bg-primary > .d-flex > .div:first-child > .bg-danger {
+  background-image: url("./SYMBOL/22.png");
+  background-size: cover;
+  width: 75px !important;
+  height: 75px;
+  padding: 0 !important;
+}
+
+/* Last logo (right) */
+.bg-primary > .d-flex > .div:last-child > .bg-danger {
+  background-image: url("./SYMBOL/33.jpg");
+  background-size: cover;
+  width: 75px !important;
+  height: 75px;
+  padding: 0 !important;
+}
+/* .bg-primary > .d-flex > .div:last-child {
+  display: flex;
+  width: fit-content;
+  flex: none;
+} */

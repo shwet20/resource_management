@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Admin Data Entry</title>
+    <link rel="stylesheet" href="./sample.css" />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        padding: 16px;
+      }
+      .card {
+        border: 1px solid #ddd;
+        padding: 12px;
+        border-radius: 6px;
+        max-width: 700px;
+      }
+      .row {
+        display: flex;
+        gap: 8px;
+        margin-bottom: 8px;
+      }
+      input,
+      select {
+        padding: 8px;
+        flex: 1;
+      }
+      button {
+        padding: 8px 12px;
+      }
+      ul {
+        margin-top: 8px;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Admin — Unit Data Entry</h2>
+    <p>
+      This page is for the single <strong>admin</strong> user to submit
+      unit-wise data. Admins cannot view dashboards.
+    </p>
+
+    <div class="card">
+      <form id="admin-form">
+        <div class="row">
+          <input id="unit" placeholder="Unit name (e.g. Alpha)" required />
+          <input id="key" placeholder="Key (e.g. strength)" required />
+        </div>
+        <div class="row">
+          <input id="value" placeholder="Value (e.g. 42)" required />
+          <button type="submit">Submit</button>
+        </div>
+      </form>
+
+      <h4>Submitted data</h4>
+      <div id="submissions"></div>
+    </div>
+
+    <script src="./app.js"></script>
+    <script>
+      // require admin user
+      const user = window.__app.getCurrentUser();
+      if (!user) {
+        // login overlay should appear automatically, but just in case, redirect to index
+        window.location.href = "./index.html";
+      } else if (user.role !== "admin") {
+        // non-admin should not be on this page
+        alert("Only admin may use this page. Redirecting to home.");
+        window.location.href = "./index.html";
+      }
+
+      const form = document.getElementById("admin-form");
+      const submissions = document.getElementById("submissions");
+
+      function renderList() {
+        const data = window.__app.readUnitData();
+        submissions.innerHTML = "";
+        const keys = Object.keys(data).sort();
+        if (keys.length === 0) {
+          submissions.innerHTML = "<p>No submissions yet.</p>";
+          return;
+        }
+        keys.forEach((unit) => {
+          const box = document.createElement("div");
+          box.style.borderTop = "1px solid #eee";
+          box.style.paddingTop = "8px";
+          const h = document.createElement("strong");
+          h.textContent = "Unit: " + unit;
+          box.appendChild(h);
+          const ul = document.createElement("ul");
+          data[unit].forEach((entry) => {
+            const li = document.createElement("li");
+            const dt = new Date(entry.timestamp).toLocaleString();
+            li.textContent = `${entry.key}: ${entry.value} — (${dt})`;
+            const del = document.createElement("button");
+            del.textContent = "Delete";
+            del.style.marginLeft = "8px";
+            del.addEventListener("click", () => {
+              deleteEntry(unit, entry.id);
+            });
+            li.appendChild(del);
+            ul.appendChild(li);
+          });
+          box.appendChild(ul);
+          submissions.appendChild(box);
+        });
+      }
+
+      function deleteEntry(unit, id) {
+        const data = window.__app.readUnitData();
+        if (!data[unit]) return;
+        data[unit] = data[unit].filter((e) => e.id !== id);
+        if (data[unit].length === 0) delete data[unit];
+        window.__app.writeUnitData(data);
+        renderList();
+        alert("Entry deleted.");
+      }
+
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const unit = document.getElementById("unit").value.trim();
+        const key = document.getElementById("key").value.trim();
+        const value = document.getElementById("value").value.trim();
+        if (!unit || !key) return;
+        const data = window.__app.readUnitData();
+        if (!data[unit]) data[unit] = [];
+        const entry = {
+          id: Date.now() + "-" + Math.random().toString(36).slice(2, 8),
+          key,
+          value,
+          timestamp: Date.now(),
+        };
+        data[unit].push(entry);
+        window.__app.writeUnitData(data);
+        form.reset();
+        renderList();
+        alert("Submitted for unit: " + unit);
+      });
+
+      // initial render
+      renderList();
+    </script>
+  </body>
+</html>

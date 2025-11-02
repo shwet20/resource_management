@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>VEH State</title>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Chart.js Date Adapter -->
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
+    <!-- Chart.js Data Labels Plugin -->
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
+    <!-- Bootstrap -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <style>
+      #pieChart {
+        max-width: 100%;
+        height: 250px !important;
+      }
+
+      .nav-link-custom:hover {
+        background-color: green !important;
+        color: white !important;
+      }
+
+      .nav-link-custom.active {
+        background-color: green !important;
+        color: white !important;
+      }
+    </style>
+  </head>
+
+  <body class="bg-body-tertiary">
+    <div class="container-fluid">
+      <!-- HEADER -->
+      <div class="row">
+      <div class="bg-primary px-3 py-1 border border-dark shadow">
+        <div class="d-flex justify-content gap-2">
+          <div class="div col-1 px-2">
+            <div class="bg-danger w-75 rounded-circle"></div>
+          </div>
+          <div class="div col-10">
+            <div class="p-1">
+              <h3 class="fw-bold fs-1 text-white pt-1 text-decoration-underline" style="font-family: Trirong, serif;" align="center">
+                HQ 330 INF BDE
+              </h3>
+            </div>
+          </div>
+          <div class="div col-1 ps-2">
+            <div class="bg-danger w-75 rounded-circle"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+      <div class="container py-2">
+        <div class="row m-2 px-3 pt-3 card shadow pb-0">
+          <table
+            class="table table-bordered border-dark table-striped"
+            style="font-size: 12px"
+          >
+          <thead class="border border-1 border-dark table-secondary">
+              <tr>
+                  <th>Sr No</th>
+                  <th>Nomenclature</th>
+                  <th>AUTH</th>
+                  <th>HELD</th>
+                  <th>ON ROAD</th>
+                  <th>OFF ROAD</th>
+                  <th>REMARKS</th>
+                </tr>
+            </thead>
+            <tbody class="table-group-divider">
+              <tr>
+                <th colspan="5">15 MARATHA LI</th>
+              </tr>
+            <tr>
+                <td>1</td>
+                <td>SCORPIO</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>MG</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td>STORME</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td>MG (ATGM)</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>5</td>
+                <td>2.5 TON</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>6</td>
+                <td>ALS</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>7</td>
+                <td>HMV</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>8</td>
+                <td>WB 2KL</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>9</td>
+                <td>WB 5KL</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>10</td>
+                <td>TATRA</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+               <tbody class="table-group-divider">
+              <tr>
+                <th colspan="5">15 JAT</th>
+              </tr>
+            <tr>
+                <td>1</td>
+                <td>SCORPIO</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>MG</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td>STORME</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td>MG (ATGM)</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>5</td>
+                <td>2.5 TON</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>6</td>
+                <td>ALS</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>7</td>
+                <td>HMV</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>8</td>
+                <td>WB 2KL</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>9</td>
+                <td>WB 5KL</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+              <tr>
+                <td>10</td>
+                <td>TATRA</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script src="app.js"></script>
+</html>
